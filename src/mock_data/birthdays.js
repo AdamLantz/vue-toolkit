@@ -21,7 +21,7 @@ export const details = {
         id: 3,
         firstName: "Franken",
         lastName: "Stein",
-        dateOfBirth: new Date(1989, 11, 14),
+        dateOfBirth: new Date(1989, 10, 14),
         photoURL: "http://placekitten.com/200/150",
         likes: [],
         dislikes: [],

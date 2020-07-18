@@ -1,6 +1,6 @@
 <template>
   <Card :elevation="2" class="info">
-    <div v-if="details" class="row">
+    <div v-if="details && !details.error" class="row">
       <Avatar :url="details.photoURL" :firstName="details.firstName" :lastName="details.lastName" />
       <div class="column">
         <div class="name">{{`${details.firstName} ${details.lastName}`}}</div>
@@ -25,6 +25,7 @@
         </div>
       </div>
     </div>
+    <div v-else-if="details && details.error">No data found.</div>
     <div v-else>Loading...</div>
   </Card>
 </template>
@@ -42,22 +43,34 @@ export default {
     Avatar
   },
   created() {
-    this.$store.dispatch(actions.FETCH_DETAILS, this.$props.id);
+    this.fetchData();
+  },
+  watch: {
+    '$route': 'fetchData'
+  },
+  methods: {
+    fetchData() {
+      this.$store.dispatch(actions.FETCH_DETAILS, this.$props.id);
+    }
   },
   computed: {
     details() {
+      // Use the full detailed information if we have it
       const detailedInfo = this.$store.getters[getters.getBirthdayDetails](
         this.$props.id
       );
-      if (detailedInfo.loaded && !detailedInfo.error) {
+      if (detailedInfo.loaded) {
         return detailedInfo;
       }
+      // Otherwise use the summary information if we have it
       if (this.$store.state.birthdays.peopleInitialized) {
         const summaryInfo = this.$store.getters[
           getters.getBirthdaySummary
         ].find(p => p.id === this.$props.id);
+        if(!summaryInfo) return null;
         return { ...summaryInfo, likes: null, dislikes: null };
       }
+      // We've got nothing to use yet
       return null;
     },
     writtenDate: function() {
