@@ -17,6 +17,7 @@ export const getters = {
 
 const groceries = {
     state: {
+        initialized: false,
         items: [],
     },
     getters: {
@@ -26,6 +27,7 @@ const groceries = {
     mutations: {
         [mutations.INITIALIZE](state, items) {
             state.items = items;
+            state.initialized = true;
         },
         [mutations.ADD_ITEM](state, name) {
             if (!name) return;
@@ -39,8 +41,9 @@ const groceries = {
     actions: {
         [actions.FETCH](context) {
             setTimeout(() => {
+                console.log(mockData);
                 context.commit(mutations.INITIALIZE, mockData)
-            }, 1000)
+            }, 1500)
         },
     },
 }

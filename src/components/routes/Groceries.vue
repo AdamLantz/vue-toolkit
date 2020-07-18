@@ -5,17 +5,22 @@
         <NewItemInput @item-added="handleItemAdded($event)" label="Grocery Item" />
       </Card>
     </div>
-    <template v-for="(items, index) in [uncheckedItems, checkedItems]">
-      <div :key="index" class="list" v-if="items.length">
-        <GroceryItem
-          v-for="item in items"
-          :key="item.id"
-          :name="item.name"
-          :checked="item.checked"
-          @click="toggleGroceryItem(item)"
-        ></GroceryItem>
-      </div>
-    </template>
+    <div v-if="$store.state.groceries.initialized">
+      <template v-for="(items, index) in [uncheckedItems, checkedItems]">
+        <div :key="index" class="list" v-if="items.length">
+          <GroceryItem
+            v-for="item in items"
+            :key="item.id"
+            :name="item.name"
+            :checked="item.checked"
+            @click="toggleGroceryItem(item)"
+          ></GroceryItem>
+        </div>
+      </template>
+    </div>
+    <div v-if="!$store.state.groceries.initialized" class="loading-container">
+        Loading...
+    </div>
   </div>
 </template>
 
@@ -33,7 +38,8 @@ export default {
     GroceryItem
   },
   created() {
-    this.$store.dispatch(actions.FETCH);
+    if (!this.$store.state.groceries.initialized)
+      this.$store.dispatch(actions.FETCH);
   },
   computed: {
     ...mapGetters({
@@ -73,5 +79,11 @@ export default {
   min-width: 300px;
   width: 40vw;
   max-width: 800px;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  font-size: 1.5rem;
 }
 </style>
