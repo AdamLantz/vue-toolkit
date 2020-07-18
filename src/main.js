@@ -22,7 +22,11 @@ const router = new VueRouter({
 const store = new Vuex.Store({
   state: {
     count: 0,
-    groceryItems: [{ name: "avocado", checked: false }],
+    groceryItems: [{ id: 0, name: "avocado", checked: false }],
+  },
+  getters: {
+    checkedGroceryItems: state => state.groceryItems.filter(g => g.checked),
+    uncheckedGroceryItems: state => state.groceryItems.filter(g => !g.checked)
   },
   mutations: {
     addGroceryItem(state, name) {

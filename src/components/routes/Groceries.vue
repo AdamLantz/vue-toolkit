@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import Card from "../ui/Card";
 import NewItemInput from "./Groceries/NewItemInput";
 import GroceryItem from "./Groceries/GroceryItem";
@@ -40,16 +41,10 @@ export default {
     GroceryItem
   },
   computed: {
-    checkedItems: function() {
-      return this.$store.state.groceryItems.filter(function(i) {
-        return i.checked;
-      });
-    },
-    uncheckedItems: function() {
-      return this.$store.state.groceryItems.filter(function(i) {
-        return !i.checked;
-      });
-    }
+    ...mapGetters({
+      checkedItems: 'checkedGroceryItems',
+      uncheckedItems: 'uncheckedGroceryItems',
+    })
   },
   methods: {
     handleItemAdded(name) {
