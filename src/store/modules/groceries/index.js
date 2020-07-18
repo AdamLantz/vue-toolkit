@@ -8,6 +8,7 @@ export const mutations = {
 
 export const actions = {
     FETCH: "FETCH",
+    ADD_ITEM: "ADD_ITEM",
 }
 
 export const getters = {
@@ -19,6 +20,7 @@ const groceries = {
     state: {
         initialized: false,
         items: [],
+        preInitItems : [],
     },
     getters: {
         [getters.checkedItems]: state => state.items.filter(g => g.checked),
@@ -26,12 +28,17 @@ const groceries = {
     },
     mutations: {
         [mutations.INITIALIZE](state, items) {
-            state.items = items;
+            state.items = [...items, ...state.preInitItems];
+            state.preInitItems = [];
             state.initialized = true;
         },
         [mutations.ADD_ITEM](state, name) {
             if (!name) return;
-            state.items.push({ id: state.items.length, name, checked: false });
+            if (!state.initialized){
+                state.preInitItems.push({ id: `p${state.preInitItems.length}`, name, checked: false});
+            } else {
+                state.items.push({ id: state.items.length, name, checked: false });
+            }
         },
         [mutations.CHECK_ITEM](state, item) {
             const targetItem = state.items.find(i => i.id === item.id);
@@ -41,9 +48,8 @@ const groceries = {
     actions: {
         [actions.FETCH](context) {
             setTimeout(() => {
-                console.log(mockData);
                 context.commit(mutations.INITIALIZE, mockData)
-            }, 1500)
+            }, 2000)
         },
     },
 }
