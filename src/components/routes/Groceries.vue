@@ -24,6 +24,7 @@ import { mapGetters } from "vuex";
 import Card from "../ui/Card";
 import NewItemInput from "./Groceries/NewItemInput";
 import GroceryItem from "./Groceries/GroceryItem";
+import { actions, mutations, getters } from "../../store/modules/groceries";
 
 export default {
   components: {
@@ -31,21 +32,21 @@ export default {
     NewItemInput,
     GroceryItem
   },
-  created(){
-    this.$store.dispatch('fetchGroceryItems');
+  created() {
+    this.$store.dispatch(actions.FETCH);
   },
   computed: {
     ...mapGetters({
-      checkedItems: "checkedGroceryItems",
-      uncheckedItems: "uncheckedGroceryItems"
+      checkedItems: getters.checkedItems,
+      uncheckedItems: getters.uncheckedItems
     })
   },
   methods: {
     handleItemAdded(name) {
-      this.$store.commit("addGroceryItem", name);
+      this.$store.commit(mutations.ADD_ITEM, name);
     },
     toggleGroceryItem(item) {
-      this.$store.commit("toggleGroceryItem", item);
+      this.$store.commit(mutations.CHECK_ITEM, item);
     }
   }
 };
