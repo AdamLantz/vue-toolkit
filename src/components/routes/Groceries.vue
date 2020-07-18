@@ -5,26 +5,17 @@
         <NewItemInput @item-added="handleItemAdded($event)" label="Grocery Item" />
       </Card>
     </div>
-    <div class="list" v-if="uncheckedItems.length">
-      <GroceryItem
-        v-for="item in uncheckedItems"
-        :key="item.id"
-        :name="item.name"
-        @click="toggleGroceryItem(item)"
-      ></GroceryItem>
-    </div>
-    <div class="divider" v-if="uncheckedItems.length && checkedItems.length">
-      <div class="divider-inner"></div>
-    </div>
-    <div class="list" v-if="checkedItems.length">
-      <GroceryItem
-        checked
-        v-for="item in checkedItems"
-        :key="item.id"
-        :name="item.name"
-        @click="toggleGroceryItem(item)"
-      ></GroceryItem>
-    </div>
+    <template v-for="(items, index) in [uncheckedItems, checkedItems]">
+      <div :key="index" class="list" v-if="items.length">
+        <GroceryItem
+          v-for="item in items"
+          :key="item.id"
+          :name="item.name"
+          :checked="item.checked"
+          @click="toggleGroceryItem(item)"
+        ></GroceryItem>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -42,8 +33,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      checkedItems: 'checkedGroceryItems',
-      uncheckedItems: 'uncheckedGroceryItems',
+      checkedItems: "checkedGroceryItems",
+      uncheckedItems: "uncheckedGroceryItems"
     })
   },
   methods: {
@@ -78,17 +69,5 @@ export default {
   min-width: 300px;
   width: 40vw;
   max-width: 800px;
-}
-
-.divider {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
-.divider > .divider-inner {
-  width: 80vw;
-  height: 2px;
-  background-color: #2c3e50;
 }
 </style>
