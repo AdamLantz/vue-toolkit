@@ -31,6 +31,9 @@ export default {
     NewItemInput,
     GroceryItem
   },
+  created(){
+    this.$store.dispatch('fetchGroceryItems');
+  },
   computed: {
     ...mapGetters({
       checkedItems: "checkedGroceryItems",
