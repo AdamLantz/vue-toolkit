@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" :style="{height: size, width: size}">
     <img :src="url" :alt="alt" />
   </div>
 </template>
@@ -10,7 +10,11 @@ export default {
   props: {
     url: String,
     firstName: String,
-    lastName: String
+    lastName: String,
+    size: {
+      type: String,
+      default: "150px",
+    },
   },
   computed: {
     alt() {
@@ -24,11 +28,10 @@ export default {
 .container {
     overflow: hidden;
     border-radius: 50%;
-    height: 150px;
-    width: 150px;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: flex-start;
+    flex: 0 0 auto;
 }
 </style>

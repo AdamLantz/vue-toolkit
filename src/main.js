@@ -5,6 +5,7 @@ import VueRouter from 'vue-router'
 import App from './App.vue';
 import store from './store';
 import Birthdays from './components/routes/Birthdays';
+import BirthdayDetails from './components/routes/Birthdays/BirthdayDetails';
 import Groceries from './components/routes/Groceries';
 
 Vue.use(VueRouter);
@@ -14,11 +15,14 @@ Vue.config.productionTip = false;
 const routes = [
   {
     path: '/birthdays',
-    components: {
-      default: Birthdays,
-      subNav: Birthdays,
-    },
-    props: { hasSubNav: true },
+    component: Birthdays,
+    children: [
+      {
+        path: ":id",
+        component: BirthdayDetails,
+        props: route => ({id: parseInt(route.params.id)}),
+      }
+    ]
   },
   { path: '/groceries', component: Groceries }
 ]

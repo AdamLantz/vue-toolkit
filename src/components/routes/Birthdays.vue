@@ -1,8 +1,16 @@
 <template>
   <div>
     <Navigation />
-    <div class="list">
-      <PersonCard v-for="person in people" :key="person.id" :person="person" @click="viewDetails(person)" />
+    <div class="details-container">
+      <router-view></router-view>
+    </div>
+    <div class="list" v-if="!$route.params.id">
+      <PersonCard
+        v-for="person in people"
+        :key="person.id"
+        :person="person"
+        @click="viewDetails(person)"
+      />
     </div>
   </div>
 </template>
@@ -10,19 +18,24 @@
 <script>
 import Navigation from "../Navigation";
 import PersonCard from "./Birthdays/PersonCard";
-import birthdayMockData from '../../mock_data/birthdays';
+import { actions, getters } from "../../store/modules/birthdays/index";
 
 export default {
   name: "Birthdays",
-  methods: {
-    viewDetails(person) {
-      console.log(person);
+  created() {
+    if (!this.$store.state.birthdays.peopleInitialized) {
+      this.$store.dispatch(actions.FETCH_SUMMARY);
     }
   },
-  data: function() {
-    return {
-      people: birthdayMockData,
-    };
+  computed: {
+    people() {
+      return this.$store.getters[getters.getBirthdaySummary];
+    }
+  },
+  methods: {
+    viewDetails(person) {
+      this.$router.push({ path: `/birthdays/${person.id}` });
+    }
   },
   components: {
     Navigation,
@@ -39,6 +52,9 @@ export default {
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   justify-content: center;
   align-items: center;
-  padding: 1rem;
+  padding: 0 1rem;
+}
+.details-container {
+  margin: 0 1rem;
 }
 </style>>

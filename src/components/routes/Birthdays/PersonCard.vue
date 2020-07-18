@@ -9,19 +9,17 @@
 <script>
 import Card from "../../ui/Card";
 import Avatar from "../../ui/Avatar";
+import writtenDate from "../../ui/helpers/writtenDate";
+
 export default {
   name: "PersonCard",
   components: {
     Card,
-    Avatar,
+    Avatar
   },
   computed: {
     writtenDate: function() {
-      return this.person.dateOfBirth.toLocaleString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric"
-      });
+      return writtenDate(this.person.dateOfBirth);
     }
   },
   props: {
@@ -47,15 +45,15 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .person {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1.5rem 1rem 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem 1rem 1.5rem 1rem;
 }
 .name {
-    margin-top: 1rem;
-    font-size: 1.25rem;
+  margin-top: 1rem;
+  font-size: 1.25rem;
 }
 </style>
