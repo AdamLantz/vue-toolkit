@@ -23,7 +23,7 @@ button {
   font-weight: bold;
   border: none;
   outline: none;
-  background-color: #15b2d3;
+  background-color: #236e96;
   border-radius: 6px;
   color: #ffffff;
   min-width: 80px;

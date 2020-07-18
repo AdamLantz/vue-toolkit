@@ -12,7 +12,14 @@ Vue.use(Vuex);
 Vue.config.productionTip = false;
 
 const routes = [
-  { path: '/birthdays', component: Birthdays },
+  {
+    path: '/birthdays',
+    components: {
+      default: Birthdays,
+      subNav: Birthdays,
+    },
+    props: { hasSubNav: true },
+  },
   { path: '/groceries', component: Groceries }
 ]
 

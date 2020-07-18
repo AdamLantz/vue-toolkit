@@ -19,6 +19,9 @@ import getShadow from "./ui/helpers/getShadow";
 
 export default {
   name: "Navigation",
+  props: {
+    subNav: Object,
+  },
   methods: {
     getShadow
   }

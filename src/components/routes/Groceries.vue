@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Navigation />
     <div class="entry">
       <Card class="entry-card" :elevation="2" :padding="16">
         <NewItemInput @item-added="handleItemAdded($event)" label="Grocery Item" />
@@ -26,6 +27,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+import Navigation from '../Navigation';
 import Card from "../ui/Card";
 import NewItemInput from "./Groceries/NewItemInput";
 import GroceryItem from "./Groceries/GroceryItem";
@@ -35,7 +37,8 @@ export default {
   components: {
     Card,
     NewItemInput,
-    GroceryItem
+    GroceryItem,
+    Navigation,
   },
   created() {
     if (!this.$store.state.groceries.initialized)

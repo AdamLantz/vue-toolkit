@@ -1,17 +1,14 @@
 <template>
   <div id="app">
-    <Navigation />
-    <router-view></router-view>
+    <router-view @test="handleTest($event)"></router-view>
   </div>
 </template>
 
 <script>
-import Navigation from "./components/Navigation.vue";
-
 export default {
   name: "App",
-  components: {
-    Navigation
+  methods: {
+    handleTest: console.log,
   }
 };
 </script>
