@@ -24,7 +24,8 @@ const routes = [
       }
     ]
   },
-  { path: '/groceries', component: Groceries }
+  { path: '/groceries', component: Groceries },
+  { path: '/', component: Groceries }
 ]
 
 const router = new VueRouter({
