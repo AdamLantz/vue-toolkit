@@ -8,6 +8,7 @@
     <div class="details-container">
       <router-view></router-view>
     </div>
+    <div class="loading" v-if="!people.length">Loading...</div>
     <div class="list" v-if="!$route.params.id">
       <PersonCard
         v-for="person in people"
@@ -60,5 +61,9 @@ export default {
 }
 .details-container {
   margin: 0 1rem;
+}
+.loading{
+  padding: 0 1rem;
+  font-size: 2rem;
 }
 </style>>
