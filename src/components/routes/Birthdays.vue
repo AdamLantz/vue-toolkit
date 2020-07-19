@@ -1,6 +1,10 @@
 <template>
   <div>
-    <Navigation />
+    <Navigation :showSecondaryNav="$route.params.id !== undefined">
+      <template v-slot:secondaryNav>
+          <router-link to="/birthdays">Back</router-link>
+      </template>
+    </Navigation>
     <div class="details-container">
       <router-view></router-view>
     </div>

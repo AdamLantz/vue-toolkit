@@ -16,7 +16,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 button {
   height: 3rem;
   font-size: 1rem;
